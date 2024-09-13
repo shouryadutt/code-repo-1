@@ -19,9 +19,9 @@ jobs:
           curl -o .github/workflows/deploy-dev-weblogic.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/main/.github/workflows/deploy-dev-weblogic.yml || echo "deploy-dev-weblogic.yaml does not exist in template-repo"
 
       - name: Commit and push the workflows
-       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       run: |
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
           git config --global user.email "ravicharan.nettyam@telus.com"
           git config --global user.name "Ravicharan-nettyam"
           git add .github/workflows/build-workflow.yaml || echo "No files to add"
