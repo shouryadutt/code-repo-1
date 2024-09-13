@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pull-requets: write
+      pull-requests: write
       
     steps:
       - name: Checkout code
