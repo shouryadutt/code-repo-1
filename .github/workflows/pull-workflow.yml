@@ -6,11 +6,15 @@ on:
       version:
         desciption: "Version of the template-repo to pull (Tag or branch)"
         required: true
-        default: 'main'
+        default: 'main'  
 
 jobs:
   pull-workflows:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues:  write
+      
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
