@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with: 
+          PAT: ${{ secrets.MY_PAT }}
 
       - name: Fetch build-workflow.yaml
         run: |
