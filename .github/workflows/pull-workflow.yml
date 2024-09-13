@@ -7,7 +7,7 @@ on:
         desciption: "Version of the template-repo to pull (Tag or branch)"
         required: true
         default: 'main'  
-        
+
 permissions:                    # Global permissions configuration starts here
   contents: read                # 'read' access to repository contents
   pull-requests: write          # 'write' access to pull requests
@@ -18,6 +18,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+      workflows: write
       
     steps:
       - name: Checkout code
