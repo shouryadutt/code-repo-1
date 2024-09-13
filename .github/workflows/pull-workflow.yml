@@ -25,7 +25,8 @@ jobs:
           ls -la
           cd .github/workflows
           ls
-          .
+          
+          
       - name: Check and set git remote
         run: | 
           if git remote get-url origin > /dev/null 2>&1; then 
