@@ -23,8 +23,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        with: 
-          token: ${{ secrets.MY_PAT }}
+        # with: 
+        #   token: ${{ secrets.MY_PAT }}
 
       - name: Fetch deploy-dev-weblogic.yaml (if it exists)
         run: |
@@ -54,7 +54,6 @@ jobs:
           git commit -m "Pulled workflows from template-repo (version: ${{ github.event.inputs.version }})" 
           # git push https://x-access-token:${{ env.PAT }}@github.com/Ravicharan-nettyam/code-repo.git main
           git push --set-upstream origin main
-
 
 
 
