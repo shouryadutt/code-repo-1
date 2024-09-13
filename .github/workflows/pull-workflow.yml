@@ -35,5 +35,5 @@ jobs:
           git add .github/workflows/build-workflow.yaml || echo "No files to add"
           git add .github/workflows/deploy-dev-weblogic.yaml || echo "No deploy-dev-weblogic.yaml to add"
           git commit -m "Pulled workflows from template-repo" 
-          git push https://x-access-token:${PAT}@github.com/Ravicharan-nettyam/code-repo.git  origin feature-branch
+          git push https://x-access-token:${PAT}@github.com/Ravicharan-nettyam/code-repo.git origin main
           
