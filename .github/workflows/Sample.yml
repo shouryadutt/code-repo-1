@@ -1,4 +1,4 @@
-name: Pull Workflows from Template Repo
+name: Test
 
 on:
   workflow_dispatch:
