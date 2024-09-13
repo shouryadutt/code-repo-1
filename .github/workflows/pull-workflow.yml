@@ -3,7 +3,7 @@ name: Pull Workflows from Template Repo
 on:
   workflow_dispatch:
     inputs:
-      versions:
+      version:
         desciption: "Version of the template-repo to pull (Tag or branch)"
         required: true
         default: 'main'
