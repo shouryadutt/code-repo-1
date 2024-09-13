@@ -28,7 +28,7 @@ jobs:
 
       - name: Commit and push the workflows
         env:
-          PAT: ${{ secrets.MY_PATS }}
+          PAT: ${{ secrets.MY_PAT }}
         run: |
           git config --global user.email "ravicharan.nettyam@telus.com"
           git config --global user.name "Ravicharan-nettyam"
