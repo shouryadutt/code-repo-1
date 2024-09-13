@@ -30,6 +30,7 @@ jobs:
       - name: Fetch build-workflow.yaml
         run: |
           curl -o build-workflow.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/${{ github.event.inputs.version }}/.github/workflows/build-workflow.yml
+          mv build-workflow.yaml .github/workflows/
           git config --global user.email "ravicharan.nettyam@telus.com"
           git config --global user.name "Ravicharan-nettyam"
           git add .
@@ -44,8 +45,8 @@ jobs:
       #   run: |
       #     echo "Moving Files to .github"
       #     ls 
-      #     ls -la
-      #     mv build-workflow.yaml .github/workflows/
+      #     mv build-workflow.yaml .github/workflows/ls -la
+      #     
       #     mv deploy-dev-weblogic.yaml .github/workflows/
       #     cd .github/workflows
       #     ls
