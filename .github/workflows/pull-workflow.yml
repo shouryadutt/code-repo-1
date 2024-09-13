@@ -33,10 +33,10 @@ jobs:
           # curl -o .github/workflows/build-workflow.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/${{ github.event.inputs.version }}/.github/workflows/build-workflow.yml
 
 
-       - name: Fetch deploy-dev-weblogic.yaml (if it exists)
-        run: |
-          # curl -o .github/workflows/deploy-weblogic.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/${{ github.event.inputs.version }}/.github/workflows/*
-          # curl -o .github/workflows/build-workflow.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/${{ github.event.inputs.version }}/.github/workflows/build-workflow.yml
+      #  - name: Fetch deploy-dev-weblogic.yaml (if it exists)
+      #   run: |
+      #     # curl -o .github/workflows/deploy-weblogic.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/${{ github.event.inputs.version }}/.github/workflows/*
+      #     # curl -o .github/workflows/build-workflow.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/${{ github.event.inputs.version }}/.github/workflows/build-workflow.yml
 
 
       # - name: Fetch deploy-dev-weblogic.yaml (if it exists)
