@@ -1,0 +1,45 @@
+name: Pull Workflows from Template Repo
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        desciption: "Version of the template-repo to pull (Tag or branch)"
+        required: true
+        default: 'main'  
+
+jobs:
+  pull-workflows:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with: 
+          token: ${{ secrets.MY_PAT }}
+
+       - name: Fetch deploy-dev-weblogic.yaml (if it exists)
+        run: |
+           curl -o .github/workflows/deploy-weblogic.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/${{ github.event.inputs.version }}/.github/workflows/deploy-weblogic.yml
+           curl -o .github/workflows/build-workflow.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/${{ github.event.inputs.version }}/.github/workflows/build-workflow.yml
+
+
+      - name: Checking Contents
+        run: |
+          echo "checking contents"
+          cd .github/workflows
+          ls
+
+      - name: Commit and push the workflows
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          git config --global user.email "ravicharan.nettyam@telus.com"
+          git config --global user.name "Ravicharan-nettyam"
+          git add .
+          git commit -m "Pulled workflows from template-repo (version: ${{ github.event.inputs.version }})" 
+          git push origin main
+
