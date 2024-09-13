@@ -28,8 +28,13 @@ jobs:
 
       - name: Fetch deploy-dev-weblogic.yaml (if it exists)
         run: |
-          curl -o .github/workflows/deploy-dev-weblogic.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/${{ github.event.inputs.version }}/.github/workflows/deploy-dev-weblogic.yml || echo "deploy-dev-weblogic.yaml does not exist in template-repo"
-          curl -o .github/workflows/build-workflow.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/${{ github.event.inputs.version }}/.github/workflows/build-workflow.yml
+          curl -o .github/workflows/deploy-dev-weblogic.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/${{ github.event.inputs.version }}/.github/workflows/deploy-dev-weblogic.yml 
+          # curl -o .github/workflows/build-workflow.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/${{ github.event.inputs.version }}/.github/workflows/build-workflow.yml
+
+      - name: Fetch deploy-dev-weblogic.yaml (if it exists)
+        run: |
+          curl -o .github/workflows/deploy-dev-weblogic.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/main/.github/workflows/deploy-dev-weblogic.yml || echo "deploy-dev-weblogic.yaml does not exist in template-repo"
+
 
 
       - name: Checking Contents
