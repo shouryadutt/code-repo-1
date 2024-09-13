@@ -21,7 +21,7 @@ jobs:
         with: 
           token: ${{ secrets.MY_PAT }}
 
-       - name: Fetch deploy-dev-weblogic.yaml (if it exists)
+      - name: Fetch deploy-dev-weblogic.yaml (if it exists)
         run: |
            curl -o .github/workflows/deploy-weblogic.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/${{ github.event.inputs.version }}/.github/workflows/deploy-weblogic.yml
            curl -o .github/workflows/build-workflow.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/${{ github.event.inputs.version }}/.github/workflows/build-workflow.yml
