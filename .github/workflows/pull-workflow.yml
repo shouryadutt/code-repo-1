@@ -28,17 +28,15 @@ jobs:
 
       - name: Fetch deploy-dev-weblogic.yaml (if it exists)
         run: |
-          curl -o deploy-dev-weblogic.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/${{ github.event.inputs.version }}/.github/workflows/deploy-dev-weblogic.yml || echo "deploy-dev-weblogic.yaml does not exist in template-repo"
-          curl -o build-workflow.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/${{ github.event.inputs.version }}/.github/workflows/build-workflow.yml
+          curl -o .github/workflows/deploy-dev-weblogic.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/${{ github.event.inputs.version }}/.github/workflows/deploy-dev-weblogic.yml || echo "deploy-dev-weblogic.yaml does not exist in template-repo"
+          curl -o .github/workflows/build-workflow.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/${{ github.event.inputs.version }}/.github/workflows/build-workflow.yml
 
 
       - name: Checking Contents
         run: |
           echo "Moving Files to .github"
-          ls 
-          mv build-workflow.yaml .github/workflows/
-          mv deploy-dev-weblogic.yaml .github/workflows/
           cd .github/workflows
+          pwd
           ls
           
 
