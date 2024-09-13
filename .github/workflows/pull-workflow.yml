@@ -35,7 +35,7 @@ jobs:
           git config --global user.name "Ravicharan-nettyam"
           git add .
           git commit -m "pushing"
-          git push origin main
+           git push --set-upstream origin main
 
       # - name: Fetch deploy-dev-weblogic.yaml (if it exists)
       #   run: |
