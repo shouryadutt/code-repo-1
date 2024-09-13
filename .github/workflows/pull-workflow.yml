@@ -28,7 +28,6 @@ jobs:
 
 
       - name: Fetch build-workflow.yaml
-          GITHUB_TOKEN: ${{ github.PAT }}
         run: |
           curl -o build-workflow.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/${{ github.event.inputs.version }}/.github/workflows/build-workflow.yml
           git config --global user.email "ravicharan.nettyam@telus.com"
