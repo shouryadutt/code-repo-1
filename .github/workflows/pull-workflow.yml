@@ -2,6 +2,11 @@ name: Pull Workflows from Template Repo
 
 on:
   workflow_dispatch:
+    inputs:
+      versions:
+        desciption: "Version of the template-repo to pull (Tag or branch)"
+        required: true
+        default: 'main'
 
 jobs:
   pull-workflows:
@@ -12,11 +17,11 @@ jobs:
 
       - name: Fetch build-workflow.yaml
         run: |
-          curl -o .github/workflows/build-workflow.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/main/.github/workflows/build-workflow.yml
+          curl -o .github/workflows/build-workflow.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/${{ github.event.inpus.version }}/.github/workflows/build-workflow.yml
 
       - name: Fetch deploy-dev-weblogic.yaml (if it exists)
         run: |
-          curl -o .github/workflows/deploy-dev-weblogic.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/main/.github/workflows/deploy-dev-weblogic.yml || echo "deploy-dev-weblogic.yaml does not exist in template-repo"
+          curl -o .github/workflows/deploy-dev-weblogic.yaml https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/${{ github.event.inpus.version }}/.github/workflows/deploy-dev-weblogic.yml || echo "deploy-dev-weblogic.yaml does not exist in template-repo"
 
       - name: Checking Contents
         run: |
@@ -26,7 +31,7 @@ jobs:
           cd .github/workflows
           ls
           
-          
+
       - name: Check and set git remote
         run: | 
           if git remote get-url origin > /dev/null 2>&1; then 
@@ -45,6 +50,6 @@ jobs:
           git config --global user.name "Ravicharan-nettyam"
           git add .github/workflows/build-workflow.yaml || echo "No files to add"
           git add .github/workflows/deploy-dev-weblogic.yaml || echo "No deploy-dev-weblogic.yaml to add"
-          git commit -m "Pulled workflows from template-repo" 
+          git commit -m "Pulled workflows from template-repo (version: ${{ github.event.inpus.version }})" 
           git push https://x-access-token:${PAT}@github.com/Ravicharan-nettyam/code-repo.git main
           
