@@ -1,0 +1,60 @@
+name: Pull Workflows from Template Repo
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        desciption: "Version of the template-repo to pull (Tag or branch)"
+        required: true
+        default: 'main'  
+
+permissions:                    # Global permissions configuration starts here
+  contents: read                # 'read' access to repository contents
+  pull-requests: write          # 'write' access to pull requests
+
+jobs:
+  pull-workflows:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+      
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Fetch build-workflow.yaml
+        run: |
+          curl -o app.yaml  https://raw.githubusercontent.com/Ravicharan-nettyam/template-repo/${{ github.event.inputs.version }}/app.yaml
+
+      
+      - name: Checking Contents
+        run: |
+          echo "checking contents"
+          ls 
+          ls -la
+        
+          
+
+      - name: Check and set git remote
+        run: | 
+          if git remote get-url origin > /dev/null 2>&1; then 
+            echo "Remote 'origin' is already set." 
+          else 
+            echo "Remote 'origin' not set.Adding remote." 
+            git remote add origin https://x-access-token:${{ secrets.MY_PAT }}@github.com/Ravicharan-nettyam/code-repo.git
+          fi 
+          git remote -v
+
+      - name: Commit and push the workflows
+        env:
+          PAT: ${{ secrets.MY_PAT }}
+        run: |
+          git config --global user.email "ravicharan.nettyam@telus.com"
+          git config --global user.name "Ravicharan-nettyam"
+          git add app.yaml
+          git commit -m "Pulled workflows from template-repo (version: ${{ github.event.inputs.version }})" 
+          git push https://x-access-token:${{ env.PAT }}@github.com/Ravicharan-nettyam/code-repo.git main
+         
+          
