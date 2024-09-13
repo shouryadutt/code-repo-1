@@ -41,15 +41,15 @@ jobs:
           ls
           
 
-      - name: Check and set git remote
-        run: | 
-          if git remote get-url origin > /dev/null 2>&1; then 
-            echo "Remote 'origin' is already set." 
-          else 
-            echo "Remote 'origin' not set.Adding remote." 
-            git remote add origin https://x-access-token:${{ secrets.MY_PAT }}@github.com/Ravicharan-nettyam/code-repo.git
-          fi 
-          git remote -v
+      # - name: Check and set git remote
+      #   run: | 
+      #     if git remote get-url origin > /dev/null 2>&1; then 
+      #       echo "Remote 'origin' is already set." 
+      #     else 
+      #       echo "Remote 'origin' not set.Adding remote." 
+      #       git remote add origin https://x-access-token:${{ secrets.MY_PAT }}@github.com/Ravicharan-nettyam/code-repo.git
+      #     fi 
+      #     git remote -v
 
       - name: Commit and push the workflows
         env:
@@ -61,5 +61,5 @@ jobs:
           # git add build-workflow.yaml || echo "No files to add"
           # git add deploy-dev-weblogic.yaml || echo "No deploy-dev-weblogic.yaml to add"
           git commit -m "Pulled workflows from template-repo (version: ${{ github.event.inputs.version }})" 
-          git push https://x-access-token:${{ env.PAT }}@github.com/Ravicharan-nettyam/code-repo.git feature-branch
+          git push https://x-access-token:${{ env.PAT }}@github.com/Ravicharan-nettyam/code-repo.git main
           
