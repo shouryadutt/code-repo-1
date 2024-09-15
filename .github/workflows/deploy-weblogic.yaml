@@ -1,4 +1,4 @@
-# deploy-dev-weblogic.yaml
+# deploy-dev-weblogic.yaml this is for test purpose
 name: Deploy to Dev WebLogic
 on: [push]
 
