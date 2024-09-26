@@ -27,6 +27,12 @@ jobs:
         REPO_BRANCH_LIST: ${{ github.event.inputs.repo_branch_list }}      
       run: python fetch_workflows.py
 
+    - name: Checking Downloaded workflows
+      run: ls -l .github/workflows/
+
+    - name: Git status Check
+      run: git status
+
     - name: Commit downloaded workflows to .github/workflows
       env:
         GITHUB_TOKEN: ${{ secrets.MY_PAT }}
@@ -34,5 +40,5 @@ jobs:
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
         git add .github/workflows/*
-        git commit -m "Downloaded workflows from multiple repositories"
-        git push
+        git commit -m "Downloaded workflows from multiple repositories" || echo "Nothing to Commit"
+        git push || echo "Nothing to push"
