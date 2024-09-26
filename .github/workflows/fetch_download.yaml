@@ -12,6 +12,8 @@ jobs:
     steps:
     - name: Checkout the repository
       uses: actions/checkout@v3
+      with: 
+          token: ${{ secrets.MY_PAT }}
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -35,7 +37,7 @@ jobs:
 
     - name: Commit downloaded workflows to .github/workflows
       env:
-        GITHUB_TOKEN: ${{ secrets.MY_PAT }}
+          GITHUB_TOKEN: ${{ github.token }}
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
