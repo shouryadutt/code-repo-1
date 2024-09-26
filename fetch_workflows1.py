@@ -6,64 +6,58 @@ def fetch_workflows(repo_name, branch_name, github_token):
         'Authorization': f'token {github_token}',
         'Accept': 'application/vnd.github.v3+json'
     }
-    # GitHub API URL to fetch workflows from the repo
-    api_url = f'https://api.github.com/repos/{repo_name}/actions/workflows?ref={branch_name}'
+    # GitHub API URL to fetch the contents of the .github/workflows directory
+    api_url = f'https://api.github.com/repos/{repo_name}/contents/.github/workflows?ref={branch_name}'
     try:
         response = requests.get(api_url, headers=headers)
         response.raise_for_status()
-        workflows = response.json().get('workflows', [])
+        workflows = response.json()
         if not workflows:
-            print(f"No workflows found for {repo_name} on branch {branch_name}.")
+            print(f"No workflows found in {repo_name} on branch {branch_name}.")
         else:
             print(f"Workflows in repository {repo_name} on branch {branch_name}:")
             for workflow in workflows:
-                workflow_name = workflow['name']
-                workflow_id = workflow['id']
-                print(f"- {workflow_name} (ID: {workflow_id})")
-                download_workflow_file(repo_name, workflow_id, branch_name, github_token)
+                if workflow['type'] == 'file' and workflow['name'].endswith('.yml'):
+                    workflow_name = workflow['name']
+                    file_path = workflow['path']
+                    print(f"- {workflow_name}")
+                    download_workflow_file(repo_name, file_path, branch_name, github_token)
     except requests.exceptions.RequestException as e:
         print(f"Error fetching workflows from {repo_name} on branch {branch_name}: {e}")
 
 
-def download_workflow_file(repo_name, workflow_id, branch_name, github_token):
+def download_workflow_file(repo_name, file_path, branch_name, github_token):
     headers = {
         'Authorization': f'token {github_token}',
         'Accept': 'application/vnd.github.v3+json'
     }
-    # GitHub API URL to fetch workflow content by ID
-    api_url = f'https://api.github.com/repos/{repo_name}/actions/workflows/{workflow_id}/timing'
+    # GitHub raw content URL to fetch the workflow YAML content
+    raw_url = f'https://raw.githubusercontent.com/{repo_name}/{branch_name}/{file_path}'
     try:
-        response = requests.get(api_url, headers=headers)
-        response.raise_for_status()
-        workflow_file_url = response.json().get('path')
-        if not workflow_file_url:
-            print(f"No workflow file found for workflow ID {workflow_id}.")
-            return
-        # GitHub API URL to fetch the raw workflow YAML content
-        raw_url = f'https://raw.githubusercontent.com/{repo_name}/{branch_name}/{workflow_file_url}'
         workflow_yaml = requests.get(raw_url, headers=headers).text
         if workflow_yaml:
-            save_workflow_to_file(workflow_file_url, workflow_yaml)
+            save_workflow_to_file(file_path, workflow_yaml)
         else:
-            print(f"Failed to download workflow file: {workflow_file_url}")
+            print(f"Failed to download workflow file: {file_path}")
     except requests.exceptions.RequestException as e:
         print(f"Error fetching workflow file from {repo_name}: {e}")
 
-def save_workflow_to_file(workflow_file_url, workflow_content):
+
+def save_workflow_to_file(file_path, workflow_content):
     # Define the target directory as .github/workflows
     target_directory = ".github/workflows/"
     # Ensure the directory exists
     if not os.path.exists(target_directory):
         os.makedirs(target_directory)
-    # Extract the filename from the file URL
-    filename = workflow_file_url.split("/")[-1]
+    # Extract the filename from the file path
+    filename = file_path.split("/")[-1]
     # Save the workflow YAML content to the .github/workflows directory
     filepath = os.path.join(target_directory, filename)
     with open(filepath, 'w') as file:
         file.write(workflow_content)
     print(f"Workflow saved to {filepath}")
 
-    
+
 if __name__ == "__main__":
     # List of repositories and branches provided as environment variables
     repo_branch_list = os.getenv('REPO_BRANCH_LIST')
